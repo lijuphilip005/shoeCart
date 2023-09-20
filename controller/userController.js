@@ -694,38 +694,6 @@ const total = async (req, res, next) => {
 
 
 
-
-// deleteProduct: async (req,res)=>{
-//     id=req.params.id
-//     console.log(id);
-//     await productModel.findByIdAndDelete({_id:id})
-//     .then((data)=>{
-//         res.redirect('/admin/all-products')
-//     }).catch((err)=>{
-//         console.log(err);
-// })
-// }
-// }
-
-// const removeAddres = async (req, res) => {
-//     console.log(req.body);
-
-//     try {
-//         const userId = req.body.userId; 
-//         var addressId=parseInt(req.body.adressId)
-//         console.log(addressId);
-
-//         await user.findByIdAndDelete(userId,{addressId});
-
-//         res.json({ message: 'Address removed successfully' });
-//     } catch (error) {
-//         console.error(error.message);
-//         res.status(500).json({ error: 'Internal Server Error' });
-//     }
-// };
-
-
-
 const removeAddres = async (req, res, next) => {
     console.log("hellllllllllllllll")
     id = req.session.user._id
@@ -764,17 +732,7 @@ const addcouponpost = async (req, res, next) => {
         res.json({ redirect: false });
     }
 };
-//order details
-// const listOrder = async (req, res) => {
-//     try {
-//         orderModel.find({}).sort({ createdAt: -1 }).then((data) => {
-//             res.render("orderlist", { data })
-//         })
 
-//     } catch (error) {
-//         console.log(error.message)
-//     }
-// };
 
 
 const ShowOrders = async (req, res, next) => {
@@ -932,23 +890,6 @@ const walletTrans = async (req, res, next) => {
         next(err)
     }
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
