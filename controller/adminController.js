@@ -587,24 +587,6 @@ const salesYearly = async (req, res) => {
 
 
 
-// const orderDetail=async(req,res,next)=>{
-//     try{
-//         var id=req.params.id
-//         var productId =req.params.id
-//         orderModel.findById(productId).then((data)=>{
-
-
-//             res.render("page-orders-detail",{data,id})
-//             console.log('hhhhhhhhhh',data)
-
-//         })
-
-//     }catch(err){
-//         next(err)
-//     }
-// };
-
-
 
 const orderDetail = async (req, res) => {
     try {
@@ -627,22 +609,6 @@ const orderDetail = async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -699,20 +665,6 @@ const addcouponpost = async (req, res, next) => {
 
 
 
-
-// const addcouponpost=(req,res)=>{
-
-//         console.log(req.file)
-//         let category = new orderModel({
-//             code:req.body.code,
-//             Descript:req.body.basePrice,
-//             description:req.body.description,
-//             image:req.file.filename,
-//         })
-//         category.save().then((data)=>{
-//             console.log(data)
-//             res.redirect('/admin/categories')
-//         })
 
 const editcoupon = async (req, res, next) => {
     try {
