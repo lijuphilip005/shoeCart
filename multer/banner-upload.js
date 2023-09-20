@@ -12,6 +12,9 @@ const bannerManagement =multer.diskStorage({
   })
   
   
+const git ="hi"
+
+
   const banner = multer({ storage: bannerManagement})
   module.exports={
   banner
