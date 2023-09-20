@@ -11,30 +11,7 @@ const categoryModel = require('../model/category-model')
 
 
 module.exports = {
-  // category:(req,res,next)=>{
-  //   try{
-  //     const pageCount = Math.ceil(posts.length / 10);
-  //     let page = parseInt(req.query.page);
-  //     if (!page) { page = 1;}
-  //     if (page > pageCount) {
-  //       page = pageCount
-  //     }
-
-  //       page= page,
-  //       pageCount= pageCount,
-
-  //        slicedPosts= posts.slice(page * 10 - 10, page * 10)
-  //     categoryModel.find({}).then((data)=>{
-  //         console.log(data)
-  //         res.render('page-categories' , {data,error:req.session.categoryError,page,pageCount,posts})
-  //     }).catch((err)=>{
-  //         res.status(200).json({err:'Error loading category'})
-  //     })
-  //   }catch(err){ 
-  //     next(err)
-  //   }
-
-  // }, 
+ 
 
 
   category: async (req, res, next) => {
@@ -162,35 +139,6 @@ module.exports = {
 
 
 
-// addCategory:(req,res)=>{
-//     // (async () => {
-//     //     const rembg = new Rembg({
-//     //       logging: true,
-//     //     });
-//         // userController.createAcc(req.body).then((id)=>{})
-//         console.log(req.file)
-
-//         let category = new categoryModel({
-//             category:req.body.category,
-//             base_price:req.body.basePrice,
-//             description:req.body.description,
-//             image:req.file.filename,
-//         })
-//         category.save().then((data)=>{
-//             console.log(data)
-//             res.redirect('/admin/categories')
-//         })
-//         // try {
-//         //   console.log(req.file)
-//         //   const input = sharp(req.file.path);
-//         //   const output = await rembg.remove(input);
-//         //   await output.webp().toFile('./public/upload/category/'+req.file.filename);
-//         //   res.redirect('/admin/category')
-//         // } catch (error) {
-//         //   res.status(500).json({ error: 'An error occurred while processing the image.' });
-//         // }
-//     //   })();
-// },
 
 
 
