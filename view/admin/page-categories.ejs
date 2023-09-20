@@ -1,0 +1,330 @@
+<%-include("header")%>
+
+
+    <section class="content-main">
+        <div class="content-header">
+            <div>
+                <h2 class="content-title card-title">Categories </h2>
+                <p>Add, edit or delete a category</p>
+            </div>
+            <div>
+                <!-- <input type="text" placeholder="Search Categories" class="form-control bg-white"> -->
+                <form action="/admin/searchCat" method="post">
+                    <div class="cupon_text d-flex">
+                        <input type="text" class="ms-auto " style="width: 20rem;" name="search" placeholder="search"
+                            id="coupon">
+                        <button class="btn btn-brand " type="submit">search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <% if (locals.err) { %>
+                        <p id="error-message" class="text-danger catogary">
+                            <%=err%>
+                        </p>
+                        <% } %>
+                            <div class="col-md-3">
+                                <form action="/admin/add-category" method="post" class="content-main" enctype="multipart/form-data"  onsubmit="return validateForm()">
+                                    <div class="mb-4">
+                                        <label for="product_name" name="productName" class="form-label">Name</label>
+                                        <input name="category" type="text" placeholder="Type here" name="name" class="form-control"
+                                            id="product_name" required="true" />
+                                            <div id="nameError" style="color: red;"></div>
+
+
+
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <label for="image" class="form-label">Cover Image</label>
+                                        <input name="image" type="file" placeholder="Type here" class="form-control"
+                                            id="image" required="true" />
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label class="form-label" name="productDescription" for="product_description">Description</label>
+                                        <textarea name="description" placeholder="Type here" class="form-control"  id="product_description"
+                                            required="true"></textarea>
+                                            <div id="discriptionError" style="color: red;"></div>
+                                    </div>
+                                    <div class="d-grid">
+                                        <button class="btn btn-primary" type="submit">Create category</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Image</th>
+                                                <th>Category</th>
+                                                <th>Description</th>
+                                                <!-- <th>Base Price</th> -->
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% for (i=0; i < data.length; i++) { %>
+                                                <tr>
+                                                    <td>
+                                                        <%= i+1 %>
+                                                    </td>
+                                                    <td>
+                                                        <img src="/upload/category/<%= data[i].image%>" width="80px"
+                                                            alt="img">
+                                                    </td>
+                                                    <td>
+                                                        <%= data[i].category %>
+                                                    </td>
+                                                    <td>
+                                                        <%= data[i].description%>
+                                                    </td>
+                                                    <!-- <td>
+                                                        <%= data[i].base_price%>
+                                                    </td> -->
+                                                    <td>
+                                                        <!-- <a href="" class="btn btn-info p-1">Edit</a> -->
+                                                        <a href="/admin/delete-category/<%=data[i]._id%>"
+                                                            class="btn btn-danger p-1">Delete</a>
+                                                    </td>
+                                                </tr>
+                                                <% } %>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div> <!-- .col// -->
+
+                </div> <!-- .row // -->
+            </div> <!-- card body .// -->
+            <%if(locals.currentpage){%>
+                <% if (locals.totalpages) { %>
+                    <div class="pagination">
+                        <% if (currentpage> 1) { %>
+                            <button><a href="?page=<%= currentpage - 1 %>">Previous</a></button>
+                            <% } %>
+
+                                <% for (let i=1; i <=totalpages; i++) { %>
+                                    <!-- Change the loop to start from 1 and go up to totalpages -->
+                                    <button><a href="?page=<%= i %>" class="<%= i === currentpage ? 'active' : '' %>">
+                                            <%= i %>
+                                        </a></button>
+                                    <% } %>
+
+                                        <% if (currentpage < totalpages) { %>
+                                            <button><a href="?page=<%= currentpage + 1 %>">Next</a></button>
+                                            <% } %>
+                    </div>
+                    <% } %>
+                        <% } %>
+        </div> <!-- card .// -->
+    </section> <!-- content-main end// -->
+    <footer class="main-footer font-xs">
+        <div class="row pb-30 pt-15">
+            <div class="col-sm-6">
+
+                </ul>
+                </nav>
+            </div>
+
+
+            <style>
+                .table-spacing th,
+                .table-spacing td {
+                    padding-left: 80px;
+                    /* Adjust the value as needed for the desired spacing */
+                }
+
+                .pagination {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    margin-top: 20px;
+                }
+
+                .pagination button {
+                    background-color: #f5f5f5;
+                    border: 1px solid #ccc;
+                    padding: 6px 12px;
+                    margin: 0 3px;
+                    cursor: pointer;
+
+                    transition: background-color 0.3s, color 0.3s;
+                }
+
+                .pagination button.active {
+                    background-color: #007bff;
+                    color: #fff;
+                    border-color: #007bff;
+                }
+
+                .pagination button:hover {
+                    background-color: #ddd;
+                }
+            </style>
+
+
+
+<script>
+    function validateForm() {
+            // Reset error messages
+            document.getElementById('nameError').textContent = '';
+            document.getElementById('discriptionError').textContent = '';
+
+           
+
+            // Get the values from the form
+            const productName = document.getElementById('product_name').value;
+            const productdescription = document.getElementById('product_description').value;
+            
+                
+            const  maxProductNameLength = 70; 
+            const  maxProductDescriptionLength = 250;
+
+
+
+
+
+
+            // Check for spaces or empty product name
+            if (productName.trim() === '') {
+                document.getElementById('nameError').textContent = 'category name cannot be empty.';
+                return false; // Prevent form submission
+            }
+          
+            if (productName.length > maxProductNameLength) {
+            document.getElementById('nameError').textContent = 'category name is too long.';
+            return false; // Prevent form submission
+        }
+
+
+
+
+            
+            if (productdescription.trim() === '') {
+                document.getElementById('discriptionError').textContent = 'category name cannot be empty.';
+                return false; // Prevent form submission
+            }
+
+            if (productdescription.length > maxProductDescriptionLength) {
+            document.getElementById('discriptionError').textContent = ' category description is too long.';
+            return false; // Prevent form submission
+        }
+
+            
+            
+            
+            return true; // Allow form submission if all validations pass
+        }  
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <script>
+                document.write(new Date().getFullYear())
+                function hideErrorMessage() {
+                    var errorMessage = document.getElementById("error-message");
+                    if (errorMessage) {
+                        errorMessage.style.display = "none";
+                    }
+                }
+
+                // Set a timer to hide the error message after 5 seconds (adjust the duration as needed)
+                setTimeout(hideErrorMessage, 5000); // 5000 milliseconds = 5 seconds
+
+            </script> ©, Evara - HTML Ecommerce Template .
+        </div>
+        <div class="col-sm-6">
+            <div class="text-sm-end">
+                All rights reserved
+            </div>
+        </div>
+        </div>
+    </footer>
+    </main>
+    <script src="js/vendor/jquery-2.2.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
+        integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+        crossorigin="anonymous"></script>
+    <!-- <script>
+            function duplicate(){
+
+                event.preventDefault();
+            $.ajax({
+                url:"/admin/add-category"  ,
+                method:"post",
+                data:{
+
+                },
+                
+                success:(response)=>{
+                  if  (response.status==true){
+                    alert("test")
+                    Swal.fire({
+                            title: 'Category!',
+                            text: 'Category added.',
+                            icon: 'success',
+                            timer: 5000
+                        })
+                  }else{
+                    alert("test2")
+                    Swal.fire({
+                            title: 'Category!',
+                            text: 'Category already exists.',
+                            icon: 'error',
+                            timer: 5000
+                        })
+
+                  }
+
+                }, error:(error)=>{
+                    console.log(error)
+                }
+            
+            })
+
+        }
+            
+        </script> -->
+
+
+
+    <script src="/admin-assets/js/vendors/jquery-3.6.0.min.js"></script>
+    <script src="/admin-assets/js/vendors/bootstrap.bundle.min.js"></script>
+    <script src="/admin-assets/js/vendors/select2.min.js"></script>
+    <script src="/admin-assets/js/vendors/perfect-scrollbar.js"></script>
+    <script src="/admin-assets/js/vendors/jquery.fullscreen.min.js"></script>
+    <!-- Main Script -->
+    <script src="/admin-assets/js/main.js" type="text/javascript"></script>
+
+
+
+    <!-- Mirrored from wp.alithemes.com/html/evara/evara-backend/page-categories.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 01 Aug 2021 15:33:21 GMT -->
+    < %include("../layouts/footer.ejs")%>
