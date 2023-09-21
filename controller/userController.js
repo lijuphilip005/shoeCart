@@ -302,7 +302,10 @@ const generateOtp = () => {
 const loadHome = async (req, res, next) => {
     try {
 
-        res.render("userHome", { log: req.session.isLoggedIn })
+        const data= await productModel.find()
+
+        console.log(data );
+        res.render("userHome", { log: req.session.isLoggedIn ,data})
 
     } catch (err) {
         next(err)
