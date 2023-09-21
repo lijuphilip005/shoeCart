@@ -3,7 +3,7 @@ const productModel = require('../model/product-model');
 const mongodb = require('mongodb');
 const mongoose=require("mongoose")
 const session=require("express-session")
-const cartModel=require("../model/cart-model")
+
 module.exports={
     changeQuantity:async(req,res,next)=>{
       try{

@@ -2,8 +2,9 @@ const express = require("express");
 const app = express();
 const port = 5000;
 const session = require('express-session')
+const dotenv= require('dotenv').config()
 const mongoose = require("mongoose");
-mongoose.connect("mongodb://127.0.0.1:27017/shoe_cart");
+mongoose.connect(process.env.CLUSTER);
 app.set("view engine","ejs");
 app.set('public',__dirname+'public/')
 const errorHandler=require("./middleware/errorhandler")
@@ -35,5 +36,5 @@ app.use(errorHandler);
 
 
 app.listen(port, () => {
-    console.log("server is running on localhost" ,"${port}")
+    console.log(`server is running on localhost ,${port}`)
 });
