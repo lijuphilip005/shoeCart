@@ -219,17 +219,23 @@
                 </tbody>
                 </table>
 
-                <div class="checkout_btn_inner d-flex align-items-right">
-                    <!-- <a class="gray_btn" href="#">Continue Shopping</a> -->
-                    <!-- <a class="primary-btn" href="/check-out">Proceed to checkout</a> -->
-                    <form action="/check-out" method="post">
-                        <input type="hidden" name="total" <%if(locals.total){%> value="<%=total%>"<%}%>>
-                                <button type="submit" class="btn btn-success w-100 shadow-0 mb-2" > proceed to
-                                    checkout</button>
-                                <a href="#" class="btn btn-light w-100 border mt-2"> Back to shop </a>
-                    </form>
-                </div>
+
             </div>
+
+           <div class="row justify-content-center">
+            <div class="col-lg-3"><div class="checkout_btn_inner ">
+                <!-- <a class="gray_btn" href="#">Continue Shopping</a> -->
+                <!-- <a class="primary-btn" href="/check-out">Proceed to checkout</a> -->
+                <form action="/check-out" method="post">
+                    <input type="hidden" name="total" <%if(locals.total){%> value="<%=total%>"<%}%>>
+                            <button type="submit" class="btn btn-success w-100 shadow-0 mb-2" > proceed to
+                                checkout</button>
+                            <a href="#" class="btn btn-light w-100 border mt-2"> Back to shop </a>
+                </form>
+            </div></div>
+
+
+           </div>
         </div>
         </div>
     </section>
