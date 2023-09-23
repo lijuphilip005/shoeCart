@@ -13,6 +13,7 @@ const moment = require("moment");
 
 const loadLogin = async (req, res, next) => {
   try {
+    console.log("Load login")
     res.render("adminLogin");
   } catch (err) {
     next(err);
@@ -58,6 +59,7 @@ const verifyLogin = async (req, res, next) => {
 
 const loadDashboard = async (req, res, next) => {
   try {
+    console.log(req.session)
     const userData = await user.findById({ _id: req.session.admin_id });
     const users = await user.find({ is_admin: 0 });
     res.render("adminHome"); // Updated argument names
