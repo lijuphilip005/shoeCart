@@ -18,7 +18,7 @@ const noCache=require("nocache")
 app.use(session({
     secret: 'keyboard cat',
     resave:false,
-    saveUninitialized:false,
+    saveUninitialized:true,
     cookie: { secure: false },
  
   }));
