@@ -52,7 +52,7 @@ module.exports = {
                 unit: req.body.units,
                 gst: req.body.gst,
                 quantity: req.body.quantity,
-                images: [req.files[0].filename, req.files[1].filename, req.files[2].filename, req.files[3].filename,]
+                images: [req.files[0]?.filename, req.files[1]?.filename, req.files[2]?.filename, req.files[3]?.filename,]
             })
             await product.save().then((statsu) => {
                 res.redirect('/admin/page-products-list')

@@ -8,6 +8,8 @@ mongoose.connect(process.env.CLUSTER);
 app.set("view engine","ejs");
 app.set('public',__dirname+'public/')
 const errorHandler=require("./middleware/errorhandler")
+const noCache=require("nocache")
+
 
 
 
@@ -20,6 +22,9 @@ app.use(session({
     cookie: { secure: false },
  
   }));
+
+  app.use(noCache())
+
 
   
 

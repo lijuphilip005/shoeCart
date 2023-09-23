@@ -1,7 +1,8 @@
 const { Rembg } = require('rembg-node');
 const rembg = new Rembg();
 //const sharp = require('sharp');
-const categoryModel = require('../model/category-model')
+const categoryModel = require('../model/category-model');
+const productModel = require('../model/product-model');
 
 
 
@@ -67,14 +68,7 @@ module.exports = {
 
 
       }
-      // console.log(req.file);
-      // const input = (req.file.path);
-      // const output = await rembg.remove(input);
-      // await output.webp().toFile('./public/upload/category/'+req.file.filename);
-
-
-
-      //  res.redirect('/admin/categories'); // Correct the redirect URL
+     
 
     } catch (err) {
       req.session.categoryError = true
@@ -87,12 +81,28 @@ module.exports = {
 
 
 
-  delete: (req, res, next) => {
-    try {
+  delete:async (req, res, next) => {
 
-      categoryModel.findByIdAndDelete(req.params.id).then((status) => {
-        res.redirect('/admin/category')
-      })
+    try {
+      const id=req.query.id
+      const catogary=await categoryModel.findById(id)
+      console.log("catogary>>>>" ,catogary);
+    
+
+      const a= await productModel.deleteMany({category:catogary.category})
+
+    
+       
+      //  const a= await productModel.updateMany({ category:catogary._id  }, { $unset: { category: 1 } });;
+       console.log(a,"prodddddddddducts");
+        const delet=await categoryModel.findByIdAndDelete(id)
+      
+      
+    
+
+        res.json({status:true})  
+
+      
     } catch (err) {
       next(err)
     }

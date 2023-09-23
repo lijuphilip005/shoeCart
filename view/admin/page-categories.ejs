@@ -27,17 +27,18 @@
                         </p>
                         <% } %>
                             <div class="col-md-3">
-                                <form action="/admin/add-category" method="post" class="content-main" enctype="multipart/form-data"  onsubmit="return validateForm()">
+                                <form action="/admin/add-category" method="post" class="content-main"
+                                    enctype="multipart/form-data" onsubmit="return validateForm()">
                                     <div class="mb-4">
                                         <label for="product_name" name="productName" class="form-label">Name</label>
-                                        <input name="category" type="text" placeholder="Type here" name="name" class="form-control"
-                                            id="product_name" required="true" />
-                                            <div id="nameError" style="color: red;"></div>
+                                        <input name="category" type="text" placeholder="Type here" name="name"
+                                            class="form-control" id="product_name" required="true" />
+                                        <div id="nameError" style="color: red;"></div>
 
 
 
                                     </div>
-                                    
+
                                     <div class="mb-4">
                                         <label for="image" class="form-label">Cover Image</label>
                                         <input name="image" type="file" placeholder="Type here" class="form-control"
@@ -45,10 +46,11 @@
                                     </div>
 
                                     <div class="mb-4">
-                                        <label class="form-label" name="productDescription" for="product_description">Description</label>
-                                        <textarea name="description" placeholder="Type here" class="form-control"  id="product_description"
-                                            required="true"></textarea>
-                                            <div id="discriptionError" style="color: red;"></div>
+                                        <label class="form-label" name="productDescription"
+                                            for="product_description">Description</label>
+                                        <textarea name="description" placeholder="Type here" class="form-control"
+                                            id="product_description" required="true"></textarea>
+                                        <div id="discriptionError" style="color: red;"></div>
                                     </div>
                                     <div class="d-grid">
                                         <button class="btn btn-primary" type="submit">Create category</button>
@@ -89,8 +91,10 @@
                                                     </td> -->
                                                     <td>
                                                         <!-- <a href="" class="btn btn-info p-1">Edit</a> -->
-                                                        <a href="/admin/delete-category/<%=data[i]._id%>"
-                                                            class="btn btn-danger p-1">Delete</a>
+                                                        <!-- <a href="/admin/delete-category?id=<%=data[i]._id%>"
+                                                            class="btn btn-danger p-1">unlist</a> -->
+
+                                                        <button onclick="remove('<%=data[i]._id%>')"   class="btn btn-danger p-1">unlist</button>
                                                     </td>
                                                 </tr>
                                                 <% } %>
@@ -170,59 +174,97 @@
 
 
 
-<script>
-    function validateForm() {
-            // Reset error messages
-            document.getElementById('nameError').textContent = '';
-            document.getElementById('discriptionError').textContent = '';
-
-           
-
-            // Get the values from the form
-            const productName = document.getElementById('product_name').value;
-            const productdescription = document.getElementById('product_description').value;
-            
-                
-            const  maxProductNameLength = 70; 
-            const  maxProductDescriptionLength = 250;
+            <script>
+                function validateForm() {
+                    // Reset error messages
+                    document.getElementById('nameError').textContent = '';
+                    document.getElementById('discriptionError').textContent = '';
 
 
+
+                    // Get the values from the form
+                    const productName = document.getElementById('product_name').value;
+                    const productdescription = document.getElementById('product_description').value;
+
+
+                    const maxProductNameLength = 70;
+                    const maxProductDescriptionLength = 250;
 
 
 
 
-            // Check for spaces or empty product name
-            if (productName.trim() === '') {
-                document.getElementById('nameError').textContent = 'category name cannot be empty.';
-                return false; // Prevent form submission
-            }
-          
-            if (productName.length > maxProductNameLength) {
-            document.getElementById('nameError').textContent = 'category name is too long.';
-            return false; // Prevent form submission
-        }
+
+
+                    // Check for spaces or empty product name
+                    if (productName.trim() === '') {
+                        document.getElementById('nameError').textContent = 'category name cannot be empty.';
+                        return false; // Prevent form submission
+                    }
+
+                    if (productName.length > maxProductNameLength) {
+                        document.getElementById('nameError').textContent = 'category name is too long.';
+                        return false; // Prevent form submission
+                    }
 
 
 
 
-            
-            if (productdescription.trim() === '') {
-                document.getElementById('discriptionError').textContent = 'category name cannot be empty.';
-                return false; // Prevent form submission
-            }
 
-            if (productdescription.length > maxProductDescriptionLength) {
-            document.getElementById('discriptionError').textContent = ' category description is too long.';
-            return false; // Prevent form submission
-        }
+                    if (productdescription.trim() === '') {
+                        document.getElementById('discriptionError').textContent = 'category name cannot be empty.';
+                        return false; // Prevent form submission
+                    }
 
-            
-            
-            
-            return true; // Allow form submission if all validations pass
-        }  
+                    if (productdescription.length > maxProductDescriptionLength) {
+                        document.getElementById('discriptionError').textContent = ' category description is too long.';
+                        return false; // Prevent form submission
+                    }
 
-</script>
+
+
+
+                    return true; // Allow form submission if all validations pass
+                }
+
+            </script>
+
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+
+
+            <script>
+                function remove(catId) {
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                url: `/admin/delete-category?id=${catId}`,
+                                method: 'get',
+                               
+                                success: (response) => {
+                                    if(response.status){
+                                        location.reload()
+                                    }
+
+                                }
+                            })
+
+
+                        }
+                    })
+                }
+            </script>
+
+
+
 
 
 

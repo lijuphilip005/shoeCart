@@ -256,44 +256,45 @@
 
 
     <div class="modal fade top" id="modalCoupon" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true"
-        data-bs-backdrop="true">
-        <div class="modal-dialog modal-frame modal-top modal-notify modal-success" role="document">
-            <!--Content-->
-            <div class="modal-content">
-                <!--Body-->
-                <div class="modal-body">
-                    <% coupons.forEach((coupon, index)=> { %>
-                        <div class="row d-flex justify-content-center align-items-center border rounded">
-                            <div class="col-12 col-md-12 d-flex">
-                                <div class="code-container col-3 col-md-3 d-flex align-items-center">
-                                    <p>
-                                        <span class="badge" id="couponCode<%= index %>" style="color: black;">
-                                            <%= coupon.code %>
-                                        </span>
-                                    </p>
-                                </div>
-                                <div class="content-copy-container col-9 col-md-9 d-flex align-items-center">
-                                    <p class="pt-3 mx-4">
-                                        <%= coupon.description %>
-                                            <strong> &#8377;<%= coupon.discountAmount %> discount</strong>.
-                                    </p>
-                                    <button type="button" class="btn btn-success copy-button ms-auto"
-                                        data-index="<%= index %>">
-                                        <i class="fas fa-copy ml-1 white-text "></i>
-                                    </button>
-                                </div>
+    data-bs-backdrop="true">
+    <div class="modal-dialog modal-frame modal-top modal-notify modal-success" role="document">
+        <!--Content-->
+        <div class="modal-content">
+            <!--Body-->
+            <div class="modal-body">
+                <% coupons.forEach((coupon, index)=> { %>
+                    <div class="row d-flex justify-content-center align-items-center border rounded">
+                        <div class="col-12 col-md-12 d-flex">
+                            <div class="code-container col-3 col-md-3 d-flex align-items-center">
+                                <p>
+                                    <span class="badge" id="couponCode<%= index %>" style="color: black;">
+                                        <%= coupon.code %>
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="content-copy-container col-9 col-md-9 d-flex align-items-center">
+                                <p class="pt-3 mx-4">
+                                    <%= coupon.description %>
+                                        <strong> &#8377;<%= coupon.discountAmount %> discount</strong>.
+                                </p>
+                                <button type="button" class="btn btn-success copy-button ms-auto"
+                                    data-index="<%= index %>">
+                                    <i class="fas fa-copy ml-1 white-text "></i>
+                                </button>
                             </div>
                         </div>
-                        <% }) %>
-                            <div class="close-container d-flex justify-content-end mt-2">
-                                <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">No,
-                                    thanks</button>
-                            </div>
-                </div>
+                    </div>
+                    <% }) %>
+                        <div class="close-container d-flex justify-content-end mt-2">
+                            <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">No,
+                                thanks</button>
+                        </div>
             </div>
-            <!--/.Content-->
         </div>
+        <!--/.Content-->
     </div>
+</div>
+
 
 
 
@@ -311,9 +312,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
             const copyButtons = document.querySelectorAll(".copy-button");
-
             copyButtons.forEach(copyButton => {
                 copyButton.addEventListener("click", function () {
                     const couponCode = this.closest(".row").querySelector(".badge").textContent.trim();
@@ -334,6 +334,7 @@
         async function copyToClipboard(text) {
             try {
                 await navigator.clipboard.writeText(text);
+                console.log('Text copied to clipboard:', text);
             } catch (error) {
                 console.error("Failed to copy:", error);
             }
@@ -343,21 +344,29 @@
 
 
             let addressId = $("#addressselect:checked").val();
-            console.log(addressId);
-            // let payment = $(".radio:checked").val();
-            let codbutton = document.getElementById("f-option5")
-            let onlinebutton = document.getElementById("f-option6")
-            let walletbutton = document.getElementById("wallet")
-            let payment
-            if (codbutton.checked) {
-                payment = codbutton.value
-            } else if (onlinebutton.checked) {
-                payment = onlinebutton.value
-            } else if (walletbutton.checked) {
-                payment = walletbutton.value
-            }
-            console.log(payment);
+            if(!addressId){
+                Swal.fire({
+                            title: "select address",
+                            text: "",
+                            icon: "error",
+                            timer:2000
+                        })
+            }else{
 
+                console.log(addressId);
+                // let payment = $(".radio:checked").val();
+                let codbutton = document.getElementById("f-option5")
+                let onlinebutton = document.getElementById("f-option6")
+                let walletbutton = document.getElementById("wallet")
+                let payment
+                if (codbutton.checked) {
+                    payment = codbutton.value
+                } else if (onlinebutton.checked) {
+                    payment = onlinebutton.value
+                } else if (walletbutton.checked) {
+                    payment = walletbutton.value
+                }
+                console.log(payment);
             $.ajax({
                 url: '/confirmation',
                 method: 'post',
@@ -370,7 +379,6 @@
                 },
                 success: (response) => {
                     // console.log(response.status)
-
                     if (response.method == 'cod') {
                         console.log("heloooooooooooooo");
                         Swal.fire({
@@ -431,6 +439,12 @@
                 }
             })
         }
+
+
+
+
+            }
+            
 
         function verifyPayment(order, payment) {
             $.ajax({

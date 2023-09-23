@@ -50,8 +50,8 @@
                         <td><%=orders[i].ProductDetails[0].name%></td>
                         <!-- <td><b><%=orders[i].address[0].name%></b></td> -->
                         <td><%=orders[i].finalAmount%></td>
-						<td><span class="badge rounded-pill alert-success"><%=orders[i].paymentMode%></span></td>
-                        <td><span class="badge rounded-pill alert-success"><%=orders[i].orderStatus%></span></td>
+						<td><span class=" rounded-pill alert-success"><%=orders[i].paymentMode%></span></td>
+                        <td><span class="rounded-pill alert-success"><%=orders[i].orderStatus%></span></td>
                         <td><%=orders[i].createdAt.toLocaleString()%></td>
                         <td class="text-end">
                             <a href="/orderDetail?id=<%=orders[i]._id%>" class="btn btn-md rounded font-sm">Detail</a>

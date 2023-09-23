@@ -198,19 +198,3 @@ module.exports={
   }
 },
 }
-// const total=async(req,res)=>{
-//     try{
-//       var totalPrice=0
-//   var quantity=0
-//       for(var i=0;i<cartProducts.length;i++){
-//         console.log("hi");
-//          quantity=cartProducts[i].quantity
-//            totalPrice=totalPrice+(quantity*cartProducts[i].ProductDetails[0].saleprice)
-//         }
-//         console.log(totalPrice)
-      
-//       res.render('cart',{ isLoggedIn: req.session.isLoggedIn,data:cartProducts,total:totalPrice })
-//   }catch(error){
-//     console.log(error)
-//   }
-// }
