@@ -11,21 +11,14 @@ const errorHandler=require("./middleware/errorhandler")
 const noCache=require("nocache")
 
 
-
-
-
 //user route;
 app.use(session({
     secret: 'keyboard cat',
     resave:false,
     saveUninitialized:true,
     cookie: { secure: false },
- 
   }));
-
   app.use(noCache())
-
-
   
 
 const userRoute=require("./router/userRouter");
@@ -35,10 +28,6 @@ const admin_route=require("./router/adminRouter");
 app.use("/admin",admin_route);
 
 app.use(errorHandler);
-
-
-
-
 
 app.listen(port, () => {
     console.log(`server is running on localhost ,${port}`)

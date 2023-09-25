@@ -282,7 +282,7 @@ const loadHome = async (req, res, next) => {
   try {
     const data = await productModel.find();
 
-    console.log(data);
+    data.reverse()
     res.render("userHome", { log: req.session.isLoggedIn, data });
   } catch (err) {
     next(err);
